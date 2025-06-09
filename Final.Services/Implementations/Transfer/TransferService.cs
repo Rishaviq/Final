@@ -7,10 +7,12 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Final.Repositories.Interfaces.BankAccount;
 using Final.Repositories.Interfaces.Transfer;
+using Final.Repositories.Interfaces.UsersPerAcc;
 using Final.Services.DTOs.Transfer;
 using Final.Services.DTOs.Transfer.Requests;
 using Final.Services.DTOs.Transfer.Responses;
 using Final.Services.Interfaces.Transfer;
+using Final.Services.Interfaces.UsersPerAcc;
 
 namespace Final.Services.Implementations.Transfer
 {
@@ -18,9 +20,11 @@ namespace Final.Services.Implementations.Transfer
     {
         private readonly ITransferRepository _transferRepository;
         private readonly IBankAccountRepository _bankAccountRepository;
+        private readonly IUsersPerAccRepository _usersPerAccRepository;
 
-        public TransferService(ITransferRepository transferRepository, IBankAccountRepository bankAccountRepository)
+        public TransferService(ITransferRepository transferRepository, IBankAccountRepository bankAccountRepository, IUsersPerAccRepository usersPerAccRepository)
         {
+            _usersPerAccRepository = usersPerAccRepository;
             _bankAccountRepository = bankAccountRepository;
             _transferRepository = transferRepository;
         }
@@ -78,7 +82,7 @@ namespace Final.Services.Implementations.Transfer
                     await foreach (var acc in _bankAccountRepository.RetrieveCollectionAsync(new BankAccountFilter { AccNumber = transferRequest.GoingToAccNumber }))
                     {
                         goingToId = acc.AccId;
-                         accExist = true;
+                        accExist = true;
                         break;
                     }
                     if (accExist)
@@ -94,7 +98,8 @@ namespace Final.Services.Implementations.Transfer
                             TransferStatus = "ИЗЧАКВА"
                         });
                     }
-                    else {
+                    else
+                    {
                         response.IsSuccesful = false;
                         response.Message = "The account you want to transfer money to doesn't exist";
                     }
@@ -135,6 +140,45 @@ namespace Final.Services.Implementations.Transfer
                         TransferStatus = transfer.TransferStatus,
                         UserId = transfer.UserId,
                     });
+                }
+                response.Transfers = response.Transfers.OrderByDescending(t => t.TransferId).ToList();
+                return response;
+            }
+            catch (Exception ex)
+            {
+                return new TransferListResponse
+                {
+                    IsSuccesful = false,
+                    Message = ex.Message
+                };
+            }
+        }
+
+        public async Task<TransferListResponse> GetTransfersToUser(int UserId)
+        {
+            try
+            {
+                TransferListResponse response = new TransferListResponse();
+                List<int> accounts = new List<int>();
+                await foreach (var acc in _usersPerAccRepository.RetrieveCollectionAsync(new UsersPerAccFilter { UserId = UserId }))
+                {
+                    accounts.Add(acc.BankAccountId);
+                }
+                foreach (var acc in accounts)
+                {
+                    await foreach (var transfer in _transferRepository.RetrieveCollectionAsync(new TransferFilter { GoingToId = acc }))
+                    {
+                        response.Transfers.Add(new TransferDTO
+                        {
+                            TransferId = transfer.TransferId,
+                            GoingToId = transfer.GoingToId,
+                            SenderId = transfer.SenderId,
+                            TransferAmount = transfer.TransferAmount,
+                            TransferReason = transfer.TransferReason,
+                            TransferStatus = transfer.TransferStatus,
+                            UserId = transfer.UserId,
+                        });
+                    }                  
                 }
                 response.Transfers = response.Transfers.OrderByDescending(t => t.TransferId).ToList();
                 return response;

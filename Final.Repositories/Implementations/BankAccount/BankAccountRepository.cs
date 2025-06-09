@@ -36,6 +36,10 @@ namespace Final.Repositories.Implementations.BankAccount
             {
                 commandFilter.AddCondition("AccNumber", filter.AccNumber.Value);
             }
+            if (filter.UserId is not null)
+            {
+                commandFilter.AddCondition("UserId", filter.UserId.Value);
+            }
             return base.RetrieveCollectionAsync(commandFilter);
         }
 

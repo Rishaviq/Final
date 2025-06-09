@@ -146,5 +146,34 @@ namespace Final.Web.Controllers
 
             return View("RequestAnswer", new RequestAnswerModel { isSuccess = response.IsSuccesful, message = response.Message });
         }
+
+
+        public async Task<ActionResult> Incoming() {
+            TransferListModel model = new TransferListModel();
+            var response = await _transferService.GetTransfersToUser(Convert.ToInt32(HttpContext.Session.GetInt32("UserId")));
+            if (response.IsSuccesful)
+            {
+                foreach (var transfer in response.Transfers)
+                {
+                    model.Transfers.Add(new TransferModel
+                    {
+                        TransferId = transfer.TransferId,
+                        GoingToNumber = _bankAccountService.GetAccountById(transfer.GoingToId).Result.Account.AccNumber,
+                        SenderNumber = _bankAccountService.GetAccountById(transfer.SenderId).Result.Account.AccNumber,
+                        TransferAmount = transfer.TransferAmount,
+                        TransferReason = transfer.TransferReason,
+                        TransferStatus = transfer.TransferStatus,
+                        UserId = transfer.UserId
+                    });
+                }
+
+                return View(model);
+            }
+
+
+            return View("RequestAnswer", new RequestAnswerModel { isSuccess = response.IsSuccesful, message = response.Message });
+
+            
+        }
     }
 }

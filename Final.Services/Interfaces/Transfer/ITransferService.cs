@@ -15,5 +15,6 @@ namespace Final.Services.Interfaces.Transfer
         public Task<TransferListResponse> GetTransfersByUser(int UserId);
         public Task<TransferResponse> SendTransfer(AuthRequest authorizedRequest);
         public Task<TransferResponse> CancelTransfer(AuthRequest authorizedRequest);
+        public Task<TransferListResponse> GetTransfersToUser(int UserId);
     }
 }

@@ -10,6 +10,7 @@ namespace Final.Repositories.Interfaces.BankAccount
     public class BankAccountFilter
     {
         public SqlString? AccNumber { get; set; }
-        
+        public SqlInt32? UserId { get; set; }
+
     }
 }
