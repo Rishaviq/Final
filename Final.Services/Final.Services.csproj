@@ -6,4 +6,20 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\Final.Models\Final.Models.csproj" />
+    <ProjectReference Include="..\Final.Repositories\Final.Repositories.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Implementations\BankAccount\" />
+    <Folder Include="Implementations\Transfer\" />
+    <Folder Include="Implementations\UsersPerAcc\" />
+    <Folder Include="Implementations\User\" />
+    <Folder Include="Interfaces\BankAccount\" />
+    <Folder Include="Interfaces\Transfer\" />
+    <Folder Include="Interfaces\UsersPerAcc\" />
+    <Folder Include="Interfaces\User\" />
+  </ItemGroup>
+
 </Project>
