@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using final.Services.DTOs.User;
-using Final.Services.DTOs.User;
+using Final.Services.DTOs.User.Requests;
+using Final.Services.DTOs.User.Responses;
 
 namespace Final.Services.Interfaces.User
 {

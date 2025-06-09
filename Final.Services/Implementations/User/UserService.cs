@@ -5,6 +5,8 @@ using System.Text;
 using System.Threading.Tasks;
 using Final.Repositories.Interfaces.User;
 using Final.Services.DTOs.User;
+using Final.Services.DTOs.User.Requests;
+using Final.Services.DTOs.User.Responses;
 using Final.Services.Interfaces.User;
 
 namespace Final.Services.Implementations.User

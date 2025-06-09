@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Office.Services.DTOs.User
+namespace Final.Services.DTOs.User.Requests
 {
     public class LoginRequest
     {

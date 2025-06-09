@@ -1,0 +1,16 @@
+﻿@model RequestAnswerModel
+@{
+	ViewData["Title"] = "RequestAnswer";
+}
+
+<h1>RequestAnswer</h1>
+@if (Model.isSuccess)
+
+{
+	<h2 class="text-success">Request was successful!</h2>
+	;
+}
+else{
+	<h2>@Model.message</h2>
+}
+

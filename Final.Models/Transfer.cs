@@ -18,8 +18,7 @@ namespace Final.Models
         public decimal TransferAmount { get; set; }
         [Required]
         public required string TransferReason { get; set; }
-        [Required]
-        public required string TransferStatus { get; set; }
+        public string? TransferStatus { get; set; }
         [Required]
         public int UserId { get; set; }
     }

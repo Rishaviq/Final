@@ -51,9 +51,13 @@ namespace Final.Repositories.Implementations.Transfer
             return base.RetrieveCollectionAsync(commandFilter);
         }
 
-        public Task<bool> UpdateAsync(int objectId, TransferUpdate update)
+        public async Task<bool> UpdateAsync(int objectId, TransferUpdate update)
         {
-            throw new NotImplementedException();
+            SqlConnection connection = await ConnectionFactory.CreateConnectionAsync();
+            UpdateCommand command = new UpdateCommand(connection, GetTableName(), idFieldName, objectId);
+            command.AddSetClause("TransferStatus", update.TransferStatus);
+            return await command.ExecuteNonQueryAsync() > 0;
+
         }
 
         protected override string[] GetColumns()

@@ -1,0 +1,55 @@
+﻿@using Final.Web.Models.Transfer
+@model TransferListModel
+@{
+	ViewData["Title"] = "Index";
+}
+
+<div class="container mt-5">
+	<h2 class="mb-4">transfers</h2>
+
+	<table class="table table-bordered table-hover">
+		<thead class="table-light">
+			<tr>
+				<th>Transfer Id</th>
+				<th>Send to</th>
+				<th>Send From</th>
+				<th>Amount</th>
+				<th>Reason</th>
+				<th>Status</th>
+				<th>UserId</th>
+
+			</tr>
+		</thead>
+		<tbody>
+			@foreach (var transfer in Model.Transfers)
+			{
+				<tr>
+					<td>@transfer.TransferId</td>
+					<td>@transfer.GoingToNumber</td>
+					<td>@transfer.SenderNumber</td>
+					<td>@transfer.TransferAmount</td>
+					<td>@transfer.TransferReason</td>
+					<td>@transfer.TransferStatus</td>
+					<td>@transfer.UserId</td>
+					@if (transfer.TransferStatus == "ИЗЧАКВА")
+					{
+						<td>
+							<btn onclick="location.href='@Url.Action("Send", "Transfer",new {id = transfer.TransferId})'"
+								 typeof="button" class="btn btn-primary">Send</btn>
+						</td>
+						<td>
+							<btn onclick="location.href='@Url.Action("Cancel", "Transfer",new {id = transfer.TransferId})'"
+								 typeof="button" class="btn btn-primary">Cancel</btn>
+						</td>
+					}
+
+				</tr>
+			}
+		</tbody>
+	</table>
+</div>
+<btn onclick="location.href='@Url.Action("Index", "Transfer")'"
+	 typeof="button" class="btn btn-primary">Default order</btn>
+
+<btn onclick="location.href='@Url.Action("Reorder", "Transfer")'"
+	 typeof="button" class="btn btn-primary">Waiting transfers First</btn>

@@ -1,0 +1,41 @@
+﻿@using Final.Web.Models.BankAccounts
+@model AccountsListModel
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h1 class="mb-4">New Transfer</h1>
+
+<form asp-action="Create" method="post" class="card p-4 shadow-sm">
+    <div class="mb-3">
+        <label class="form-label fw-bold">Choose Account</label>
+        @foreach (var acc in Model.Accounts)
+        {
+            <div class="form-check">
+                <input class="form-check-input" type="radio" value="@acc.AccId" name="request.SenderId" id="@acc.AccId">
+                <label class="form-check-label" for="@acc.AccId">
+                    @acc.AccNumber with balance @acc.AccBalance.ToString("F2") лв.
+                </label>
+            </div>
+        }
+    </div>
+
+    <div class="mb-3">
+        <label for="GoingToAccNumber" class="form-label fw-bold">Recipient's Account Number</label>
+        <input id="GoingToAccNumber" name="request.GoingToAccNumber" type="text" class="form-control" placeholder="Enter 22-character account number" />
+    </div>
+
+    <div class="mb-3">
+        <label for="TransferAmount" class="form-label fw-bold">Amount (лв.)</label>
+        <input id="TransferAmount" name="request.TransferAmount" type="number" step="0.01" min="0" class="form-control" placeholder="e.g., 50.00" />
+    </div>
+
+    <div class="mb-3">
+        <label for="TransferReason" class="form-label fw-bold">Reason for Transfer</label>
+        <input id="TransferReason" class="form-control" name="request.TransferReason" type="text" placeholder="Enter reason..." />
+    </div>
+
+    <div class="d-grid">
+        <button type="submit" class="btn btn-primary btn-lg">Submit Transfer</button>
+    </div>
+</form>

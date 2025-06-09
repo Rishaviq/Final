@@ -39,9 +39,13 @@ namespace Final.Repositories.Implementations.BankAccount
             return base.RetrieveCollectionAsync(commandFilter);
         }
 
-        public Task<bool> UpdateAsync(int objectId, BankAccountUpdate update)
+        public async Task<bool> UpdateAsync(int objectId, BankAccountUpdate update)
         {
-            throw new NotImplementedException();
+            SqlConnection connection = await ConnectionFactory.CreateConnectionAsync();
+            UpdateCommand command = new UpdateCommand(connection, GetTableName(), idFieldName, objectId);
+            command.AddSetClause("AccBalance", update.AccBalance);
+            return await command.ExecuteNonQueryAsync() > 0;
+
         }
 
         protected override string[] GetColumns()

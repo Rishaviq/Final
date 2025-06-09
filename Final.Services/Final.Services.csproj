@@ -12,14 +12,10 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Implementations\BankAccount\" />
-    <Folder Include="Implementations\Transfer\" />
+    <Folder Include="DTOs\BankAccount\Responses\" />
+    <Folder Include="DTOs\UsersPerAcc\Requests\" />
+    <Folder Include="DTOs\UsersPerAcc\Responses\" />
     <Folder Include="Implementations\UsersPerAcc\" />
-    <Folder Include="Implementations\User\" />
-    <Folder Include="Interfaces\BankAccount\" />
-    <Folder Include="Interfaces\Transfer\" />
-    <Folder Include="Interfaces\UsersPerAcc\" />
-    <Folder Include="Interfaces\User\" />
   </ItemGroup>
 
 </Project>

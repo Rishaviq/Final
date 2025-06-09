@@ -1,0 +1,31 @@
+﻿@using Final.Web.Models.BankAccounts
+@model AccountsListModel
+@{
+	ViewData["Title"] = "Home Page";
+}
+
+<div class="container mt-5">
+	<h2 class="mb-4">Accounts</h2>
+
+	<table class="table table-bordered table-hover">
+		<thead class="table-light">
+			<tr>
+				<th>Account Id</th>
+				<th>Account Number</th>
+				<th>Balance</th>
+
+			</tr>
+		</thead>
+		<tbody>
+			@foreach (var acc in Model.Accounts)
+			{
+				<tr>
+					<td>@acc.AccId</td>
+					<td>@acc.AccNumber</td>
+					<td>@acc.AccBalance</td>
+
+				</tr>
+			}
+		</tbody>
+	</table>
+</div>
