@@ -15,12 +15,12 @@ namespace Final.Repositories.Implementations.BankAccount
         private readonly string idFieldName = "AccId";
         public Task<int> CreateAsync(Models.BankAccount entity)
         {
-            throw new NotImplementedException();
+            return base.CreateAsync(entity, idFieldName);
         }
 
         public Task<bool> DeleteAsync(int objectId)
         {
-            throw new NotImplementedException();
+            return base.DeleteAsync(idFieldName, objectId);
         }
 
         public Task<Models.BankAccount> RetrieveAsync(int objectId)

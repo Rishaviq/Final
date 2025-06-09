@@ -74,22 +74,30 @@ namespace Final.Services.Implementations.Transfer
                     )
                 {
                     int goingToId = 0;
+                    bool accExist = false;
                     await foreach (var acc in _bankAccountRepository.RetrieveCollectionAsync(new BankAccountFilter { AccNumber = transferRequest.GoingToAccNumber }))
                     {
                         goingToId = acc.AccId;
+                         accExist = true;
                         break;
                     }
-
-                    response.CreatedTransferId = await _transferRepository.CreateAsync(new Models.Transfer
+                    if (accExist)
                     {
+                        response.CreatedTransferId = await _transferRepository.CreateAsync(new Models.Transfer
+                        {
 
-                        GoingToId = goingToId,
-                        SenderId = transferRequest.SenderId,
-                        TransferAmount = transferRequest.TransferAmount,
-                        TransferReason = transferRequest.TransferReason,
-                        UserId = transferRequest.UserId,
-                        TransferStatus = "ИЗЧАКВА"
-                    });
+                            GoingToId = goingToId,
+                            SenderId = transferRequest.SenderId,
+                            TransferAmount = transferRequest.TransferAmount,
+                            TransferReason = transferRequest.TransferReason,
+                            UserId = transferRequest.UserId,
+                            TransferStatus = "ИЗЧАКВА"
+                        });
+                    }
+                    else {
+                        response.IsSuccesful = false;
+                        response.Message = "The account you want to transfer money to doesn't exist";
+                    }
 
                 }
                 else

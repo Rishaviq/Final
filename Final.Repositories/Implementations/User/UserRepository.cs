@@ -16,12 +16,12 @@ namespace Final.Repositories.Implementations.User
         private readonly string idFieldName= "UserId";
         public Task<int> CreateAsync(Models.User entity)
         {
-            throw new NotImplementedException();
+            return base.CreateAsync(entity, idFieldName);
         }
 
         public Task<bool> DeleteAsync(int objectId)
         {
-            throw new NotImplementedException();
+            return base.DeleteAsync(idFieldName, objectId);
         }
 
         public Task<Models.User> RetrieveAsync(int objectId)
@@ -45,9 +45,13 @@ namespace Final.Repositories.Implementations.User
             return base.RetrieveCollectionAsync(commandFilter);
         }
 
-        public Task<bool> UpdateAsync(int objectId, UserUpdate update)
+        public async Task<bool> UpdateAsync(int objectId, UserUpdate update)
         {
-            throw new NotImplementedException();
+            SqlConnection connection = await ConnectionFactory.CreateConnectionAsync();
+            UpdateCommand command = new UpdateCommand(connection, GetTableName(), idFieldName, objectId);
+            command.AddSetClause("FullName", update.FullName);
+            command.AddSetClause("Password", update.Password);
+            return await command.ExecuteNonQueryAsync() > 0;
         }
 
         protected override string[] GetColumns()

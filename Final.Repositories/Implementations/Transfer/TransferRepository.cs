@@ -20,7 +20,7 @@ namespace Final.Repositories.Implementations.Transfer
 
         public Task<bool> DeleteAsync(int objectId)
         {
-            throw new NotImplementedException();
+            return base.DeleteAsync(idFieldName, objectId);
         }
 
         public Task<Models.Transfer> RetrieveAsync(int objectId)

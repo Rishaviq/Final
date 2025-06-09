@@ -38,6 +38,15 @@ namespace Final.Web.Controllers
            return RedirectToAction("Index","Home");
         }
 
-        
+        [HttpPost]
+
+        public async Task<ActionResult> LogOut()
+        {
+            HttpContext.Session.Clear();
+
+            return RedirectToAction("Index", "Home");
+        }
+
+
     }
 }

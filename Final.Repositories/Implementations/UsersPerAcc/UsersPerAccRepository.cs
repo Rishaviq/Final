@@ -15,12 +15,12 @@ namespace Final.Repositories.Implementations.UsersPerAcc
         private readonly string idFieldName = "RecordId";
         public Task<int> CreateAsync(Models.UsersPerAcc entity)
         {
-            throw new NotImplementedException();
+            return base.CreateAsync(entity, idFieldName);
         }
 
         public Task<bool> DeleteAsync(int objectId)
         {
-            throw new NotImplementedException();
+            return base.DeleteAsync(idFieldName, objectId);
         }
 
         public Task<Models.UsersPerAcc> RetrieveAsync(int objectId)
