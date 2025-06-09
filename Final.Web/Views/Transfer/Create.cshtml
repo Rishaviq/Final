@@ -4,52 +4,63 @@
 	ViewData["Title"] = "Create";
 }
 
-<h1 class="mb-4">New Transfer</h1>
+<div class="container mt-5">
+	<h2 class="mb-4 text-center fw-bold">New Transfer</h2>
 
-<form asp-action="Create" method="post" class="card p-4 shadow-sm">
-	<div class="row row-cols-1 row-cols-md-2 g-3">
-		@foreach (var acc in Model.Accounts)
-		{
-			<div class="col">
-				<label class="card h-100 p-3 border form-check-label cursor-pointer">
-					<input class="form-check-input d-none" type="radio" name="request.SenderId" value="@acc.AccId" />
-					<div class="card-body">
-						<h6 class="card-title mb-1">@acc.AccNumber</h6>
-						<p class="card-text mb-0 text-muted">Balance: @acc.AccBalance.ToString("F2") лв.</p>
-					</div>
-				</label>
-			</div>
-		}
-	</div>
+	<form asp-action="Create" method="post" class="card p-4 shadow-sm">
+		<h5 class="mb-3 fw-bold">Choose Account</h5>
+		<div class="row row-cols-1 row-cols-md-2 g-3">
+			@foreach (var acc in Model.Accounts)
+			{
+				<div class="col">
+					<label class="card account-card h-100 p-3 border rounded-3">
+						<input class="form-check-input d-none" type="radio" name="request.SenderId" value="@acc.AccId" />
+						<div class="d-flex flex-column">
+							<h6 class="mb-1 text-primary">@acc.AccNumber</h6>
+							<span class="text-muted">Balance: @acc.AccBalance.ToString("F2") лв.</span>
+						</div>
+					</label>
+				</div>
+			}
+		</div>
 
-	<div class="mb-3">
-		<label for="GoingToAccNumber" class="form-label fw-bold">Recipient's Account Number</label>
-		<input id="GoingToAccNumber" name="request.GoingToAccNumber" type="text" class="form-control" placeholder="Enter 22-character account number" />
-	</div>
+		<hr class="my-4" />
 
-	<div class="mb-3">
-		<label for="TransferAmount" class="form-label fw-bold">Amount (лв.)</label>
-		<input id="TransferAmount" name="request.TransferAmount" type="number" step="0.01" min="0" class="form-control" placeholder="e.g., 50.00" />
-	</div>
+		<div class="mb-3">
+			<label for="GoingToAccNumber" class="form-label fw-bold">Recipient's Account Number</label>
+			<input id="GoingToAccNumber" name="request.GoingToAccNumber" type="text" class="form-control" placeholder="Enter 22-character account number" />
+		</div>
 
-	<div class="mb-3">
-		<label for="TransferReason" class="form-label fw-bold">Reason for Transfer</label>
-		<input id="TransferReason" class="form-control" name="request.TransferReason" type="text" placeholder="Enter reason..." />
-	</div>
+		<div class="mb-3">
+			<label for="TransferAmount" class="form-label fw-bold">Amount (лв.)</label>
+			<input id="TransferAmount" name="request.TransferAmount" type="number" step="0.01" min="0" class="form-control" placeholder="e.g., 50.00" />
+		</div>
 
-	<div class="d-grid">
-		<button type="submit" class="btn btn-primary btn-lg">Submit Transfer</button>
-	</div>
-</form>
+		<div class="mb-3">
+			<label for="TransferReason" class="form-label fw-bold">Reason for Transfer</label>
+			<input id="TransferReason" class="form-control" name="request.TransferReason" type="text" placeholder="Enter reason..." />
+		</div>
 
+		<div class="d-grid mt-4">
+			<button type="submit" class="btn btn-primary btn-lg">Submit Transfer</button>
+		</div>
+	</form>
+</div>
 
 <style>
-	.form-check-input:checked + .card-body {
-		border: 2px solid #0d6efd;
-		border-radius: 0.5rem;
+	.account-card {
+		cursor: pointer;
+		transition: 0.3s ease;
 	}
 
-	.card:hover {
-		background-color: #f8f9fa;
-	}
+		.account-card:hover {
+			background-color: #f1f1f1;
+		}
+
+		.account-card input[type="radio"]:checked + div {
+			border: 2px solid #0d6efd;
+			border-radius: 0.5rem;
+			padding: 0.5rem;
+			background-color: #e7f1ff;
+		}
 </style>
